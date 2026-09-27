@@ -1,0 +1,562 @@
+[
+  {
+    "id": "faq-public-docs",
+    "query": "Budujemy asystenta FAQ, który odpowiada na pytania z publicznych dokumentów i podaje źródła; chcemy sprawdzić trafność odpowiedzi.",
+    "risks": [
+      "untrusted_content"
+    ],
+    "limit": 6,
+    "must": [
+      "decisions.agent-or-workflow",
+      "design.retrieval-and-memory",
+      "design.observability-and-evals",
+      "security.trust-boundaries"
+    ],
+    "must_not": [
+      "protocols.mcp",
+      "optional.team-scheduler",
+      "ux.voice",
+      "methods.prompt-optimization"
+    ]
+  },
+  {
+    "id": "invoice-extraction-json",
+    "query": "Automatyzacja wyciąga pola z faktur do walidowanego JSON w kilku stałych krokach. Czy potrzebny jest agent i jak oceniać poprawność ekstrakcji?",
+    "risks": [],
+    "limit": 6,
+    "must": [
+      "decisions.agent-or-workflow",
+      "design.agent-contract",
+      "design.observability-and-evals"
+    ],
+    "must_not": [
+      "optional.cognitive-agents",
+      "optional.team-scheduler",
+      "protocols.a2a",
+      "operations.background-work",
+      "design.tool-contract",
+      "security.approvals-and-side-effects"
+    ]
+  },
+  {
+    "id": "crm-write-multi-tenant",
+    "query": "Agent zapisuje zmianę kontaktu w CRM kilku klientów na podstawie rozmowy. Projektujemy funkcję narzędzia, uprawnienia i zatwierdzenie zapisu.",
+    "risks": [
+      "write",
+      "multi_tenant",
+      "untrusted_content"
+    ],
+    "limit": 6,
+    "must": [
+      "design.tool-contract",
+      "security.approvals-and-side-effects",
+      "security.identity-tenancy-privacy",
+      "security.trust-boundaries"
+    ],
+    "must_not": [
+      "ux.voice",
+      "optional.cognitive-agents",
+      "protocols.a2a"
+    ]
+  },
+  {
+    "id": "mcp-document-search",
+    "query": "Tworzymy zdalny serwer MCP z narzędziem wyszukiwania prywatnych dokumentów; host ma zwracać źródła i weryfikować dostęp.",
+    "risks": [
+      "personal_data"
+    ],
+    "limit": 6,
+    "must": [
+      "protocols.mcp",
+      "design.tool-contract",
+      "design.retrieval-and-memory",
+      "security.identity-tenancy-privacy"
+    ],
+    "must_not": [
+      "decisions.orchestration",
+      "ux.voice",
+      "optional.cognitive-agents",
+      "design.agent-contract",
+      "ux.generative-ui"
+    ]
+  },
+  {
+    "id": "openai-to-anthropic",
+    "query": "Migrujemy działającą aplikację z OpenAI Responses API do Anthropic Claude Messages API. Trzeba zachować historię, wywołania narzędzi i jakość.",
+    "risks": [],
+    "limit": 6,
+    "must": [
+      "operations.model-migration",
+      "decisions.provider-boundary",
+      "providers.openai",
+      "providers.anthropic",
+      "design.context-and-state",
+      "design.observability-and-evals"
+    ],
+    "must_not": [
+      "ux.voice",
+      "optional.team-scheduler",
+      "protocols.a2a"
+    ]
+  },
+  {
+    "id": "ticket-paused-approval",
+    "query": "Wielogodzinne zgłoszenie wsparcia ma zapisać zmianę dopiero po zatwierdzeniu przez użytkownika. Po restarcie worker musi wznowić proces bez podwójnego zapisu.",
+    "risks": [
+      "write"
+    ],
+    "limit": 6,
+    "must": [
+      "design.events-and-recovery",
+      "security.approvals-and-side-effects",
+      "operations.background-work"
+    ],
+    "must_not": [
+      "optional.cognitive-agents",
+      "ux.voice",
+      "protocols.mcp"
+    ]
+  },
+  {
+    "id": "billing-handoff",
+    "query": "Agent triage w czacie przekazuje całą rozmowę specjaliście billing, który ma odpowiadać klientowi. W innym zadaniu specjalista tylko pomaga managerowi.",
+    "risks": [],
+    "limit": 6,
+    "must": [
+      "decisions.single-or-multi-agent",
+      "decisions.orchestration",
+      "design.agent-contract",
+      "design.observability-and-evals"
+    ],
+    "must_not": [
+      "optional.team-scheduler",
+      "protocols.mcp",
+      "ux.voice"
+    ]
+  },
+  {
+    "id": "rag-private-tenants",
+    "query": "Budujemy RAG na poufnych dokumentach kilku tenantów. Agent ma znaleźć właściwy fragment, cytować źródło i nie pokazać dokumentu obcego klienta.",
+    "risks": [
+      "multi_tenant",
+      "untrusted_content"
+    ],
+    "limit": 6,
+    "must": [
+      "design.retrieval-and-memory",
+      "security.identity-tenancy-privacy",
+      "security.trust-boundaries",
+      "design.observability-and-evals"
+    ],
+    "must_not": [
+      "optional.cognitive-agents",
+      "ux.voice",
+      "protocols.a2a"
+    ]
+  },
+  {
+    "id": "voice-realtime",
+    "query": "Asystent głosowy ma prowadzić rozmowę realtime, przyjmować przerwanie wypowiedzi, transkrybować nazwy i chronić nagrania użytkowników.",
+    "risks": [
+      "personal_data"
+    ],
+    "limit": 6,
+    "must": [
+      "ux.voice",
+      "ux.chat-streaming",
+      "security.identity-tenancy-privacy",
+      "design.observability-and-evals"
+    ],
+    "must_not": [
+      "protocols.mcp",
+      "optional.team-scheduler",
+      "ux.generative-ui",
+      "design.tool-contract"
+    ]
+  },
+  {
+    "id": "generated-html-artifact",
+    "query": "Model tworzy interaktywny artefakt HTML i JavaScript z przyciskami. Musimy izolować kod, ograniczyć sieć i zapobiec iniekcji w danych widoku.",
+    "risks": [
+      "code_execution",
+      "untrusted_content"
+    ],
+    "limit": 6,
+    "must": [
+      "ux.generative-ui",
+      "security.sandboxing",
+      "security.trust-boundaries"
+    ],
+    "must_not": [
+      "design.events-and-recovery",
+      "ux.voice",
+      "protocols.a2a",
+      "methods.prompt-optimization",
+      "design.agent-contract",
+      "security.approvals-and-side-effects",
+      "security.identity-tenancy-privacy",
+      "design.context-and-state"
+    ]
+  },
+  {
+    "id": "proactive-calendar",
+    "query": "Proaktywny agent w tle czyta kalendarz i wysyła zaproszenia na podstawie wiadomości z webhooka. Jak ograniczyć uprawnienia, retry i zatwierdzenie?",
+    "risks": [
+      "write",
+      "personal_data",
+      "untrusted_content"
+    ],
+    "limit": 6,
+    "must": [
+      "operations.background-work",
+      "security.approvals-and-side-effects",
+      "security.identity-tenancy-privacy",
+      "security.trust-boundaries",
+      "design.tool-contract"
+    ],
+    "must_not": [
+      "optional.cognitive-agents",
+      "optional.team-scheduler",
+      "ux.voice"
+    ]
+  },
+  {
+    "id": "rag-injection-audit",
+    "query": "Audytujemy prompt injection ukryty w dokumentach RAG i wynikach wyszukiwania. Chcemy ewaluować, czy model wybiera nieuprawnione narzędzia.",
+    "risks": [
+      "untrusted_content"
+    ],
+    "limit": 6,
+    "must": [
+      "security.trust-boundaries",
+      "design.retrieval-and-memory",
+      "design.observability-and-evals",
+      "design.tool-contract"
+    ],
+    "must_not": [
+      "operations.model-migration",
+      "ux.voice",
+      "optional.team-scheduler",
+      "methods.prompt-optimization"
+    ]
+  },
+  {
+    "id": "mcp-http-headers-lookup",
+    "query": "Jakie nagłówki HTTP wymaga MCP 2026-07-28 dla tools/call?",
+    "risks": [],
+    "limit": 3,
+    "must": [
+      "protocols.mcp"
+    ],
+    "must_not": [
+      "design.observability-and-evals",
+      "design.tool-contract",
+      "ux.generative-ui"
+    ],
+    "excerpt_contains": {
+      "protocols.mcp": [
+        "Mcp-Method",
+        "Mcp-Name"
+      ]
+    }
+  },
+  {
+    "id": "en-faq-public-docs",
+    "query": "We are building a FAQ assistant that answers questions from public documents and cites sources; we want to evaluate answer relevance.",
+    "risks": [
+      "untrusted_content"
+    ],
+    "limit": 6,
+    "must": [
+      "decisions.agent-or-workflow",
+      "design.retrieval-and-memory",
+      "design.observability-and-evals",
+      "security.trust-boundaries"
+    ],
+    "must_not": [
+      "protocols.mcp",
+      "optional.team-scheduler",
+      "ux.voice",
+      "methods.prompt-optimization"
+    ]
+  },
+  {
+    "id": "en-invoice-extraction-json",
+    "query": "A fixed workflow extracts invoice fields into validated JSON. Do we need an agent, and how should we evaluate extraction accuracy?",
+    "risks": [],
+    "limit": 6,
+    "must": [
+      "decisions.agent-or-workflow",
+      "design.agent-contract",
+      "design.observability-and-evals"
+    ],
+    "must_not": [
+      "optional.cognitive-agents",
+      "optional.team-scheduler",
+      "protocols.a2a",
+      "operations.background-work",
+      "design.tool-contract",
+      "security.approvals-and-side-effects"
+    ]
+  },
+  {
+    "id": "en-crm-write-multi-tenant",
+    "query": "An agent updates a CRM contact for several customers based on a conversation. We are designing the tool function, authorization, and approval for the write.",
+    "risks": [
+      "write",
+      "multi_tenant",
+      "untrusted_content"
+    ],
+    "limit": 6,
+    "must": [
+      "design.tool-contract",
+      "security.approvals-and-side-effects",
+      "security.identity-tenancy-privacy",
+      "security.trust-boundaries"
+    ],
+    "must_not": [
+      "ux.voice",
+      "optional.cognitive-agents",
+      "protocols.a2a"
+    ]
+  },
+  {
+    "id": "en-mcp-document-search",
+    "query": "We are building a remote MCP server with a tool that searches private documents; the host should receive source references and verify access.",
+    "risks": [
+      "personal_data"
+    ],
+    "limit": 6,
+    "must": [
+      "protocols.mcp",
+      "design.tool-contract",
+      "design.retrieval-and-memory",
+      "security.identity-tenancy-privacy"
+    ],
+    "must_not": [
+      "decisions.orchestration",
+      "ux.voice",
+      "optional.cognitive-agents",
+      "design.agent-contract",
+      "ux.generative-ui"
+    ]
+  },
+  {
+    "id": "en-openai-to-anthropic",
+    "query": "We are migrating a working application from OpenAI Responses API to Anthropic Claude Messages API. We must preserve history, tool calls, and quality.",
+    "risks": [],
+    "limit": 6,
+    "must": [
+      "operations.model-migration",
+      "decisions.provider-boundary",
+      "providers.openai",
+      "providers.anthropic",
+      "design.context-and-state",
+      "design.observability-and-evals"
+    ],
+    "must_not": [
+      "ux.voice",
+      "optional.team-scheduler",
+      "protocols.a2a"
+    ]
+  },
+  {
+    "id": "en-ticket-paused-approval",
+    "query": "A long-running support ticket must write a change only after user approval. After a worker restart, the process must resume without a duplicate write.",
+    "risks": [
+      "write"
+    ],
+    "limit": 6,
+    "must": [
+      "design.events-and-recovery",
+      "security.approvals-and-side-effects",
+      "operations.background-work"
+    ],
+    "must_not": [
+      "optional.cognitive-agents",
+      "ux.voice",
+      "protocols.mcp"
+    ]
+  },
+  {
+    "id": "en-billing-handoff",
+    "query": "A triage agent in chat hands the entire conversation to a billing specialist who replies to the customer. In another task, the specialist only helps the manager.",
+    "risks": [],
+    "limit": 6,
+    "must": [
+      "decisions.single-or-multi-agent",
+      "decisions.orchestration",
+      "design.agent-contract",
+      "design.observability-and-evals"
+    ],
+    "must_not": [
+      "optional.team-scheduler",
+      "protocols.mcp",
+      "ux.voice"
+    ]
+  },
+  {
+    "id": "en-rag-private-tenants",
+    "query": "We are building RAG over confidential documents from several tenants. The agent must find the right passage, cite it, and never show another customer's document.",
+    "risks": [
+      "multi_tenant",
+      "untrusted_content"
+    ],
+    "limit": 6,
+    "must": [
+      "design.retrieval-and-memory",
+      "security.identity-tenancy-privacy",
+      "security.trust-boundaries",
+      "design.observability-and-evals"
+    ],
+    "must_not": [
+      "optional.cognitive-agents",
+      "ux.voice",
+      "protocols.a2a"
+    ]
+  },
+  {
+    "id": "en-voice-realtime",
+    "query": "A realtime voice assistant must handle interruptions, transcribe names, and protect user recordings.",
+    "risks": [
+      "personal_data"
+    ],
+    "limit": 6,
+    "must": [
+      "ux.voice",
+      "ux.chat-streaming",
+      "security.identity-tenancy-privacy",
+      "design.observability-and-evals"
+    ],
+    "must_not": [
+      "protocols.mcp",
+      "optional.team-scheduler",
+      "ux.generative-ui",
+      "design.tool-contract"
+    ]
+  },
+  {
+    "id": "en-generated-html-artifact",
+    "query": "The model generates an interactive HTML and JavaScript artifact with buttons. We need to isolate code, restrict network access, and prevent injection through view data.",
+    "risks": [
+      "code_execution",
+      "untrusted_content"
+    ],
+    "limit": 6,
+    "must": [
+      "ux.generative-ui",
+      "security.sandboxing",
+      "security.trust-boundaries"
+    ],
+    "must_not": [
+      "design.events-and-recovery",
+      "ux.voice",
+      "protocols.a2a",
+      "methods.prompt-optimization",
+      "design.agent-contract",
+      "security.approvals-and-side-effects",
+      "security.identity-tenancy-privacy",
+      "design.context-and-state"
+    ]
+  },
+  {
+    "id": "en-proactive-calendar",
+    "query": "A proactive background agent reads the calendar and sends invitations based on a webhook message. How should we limit permissions, retries, and approvals?",
+    "risks": [
+      "write",
+      "personal_data",
+      "untrusted_content"
+    ],
+    "limit": 6,
+    "must": [
+      "operations.background-work",
+      "security.approvals-and-side-effects",
+      "security.identity-tenancy-privacy",
+      "security.trust-boundaries",
+      "design.tool-contract"
+    ],
+    "must_not": [
+      "optional.cognitive-agents",
+      "optional.team-scheduler",
+      "ux.voice"
+    ]
+  },
+  {
+    "id": "en-rag-injection-audit",
+    "query": "We are auditing prompt injection hidden in RAG documents and search results. We want to evaluate whether the model selects unauthorized tools.",
+    "risks": [
+      "untrusted_content"
+    ],
+    "limit": 6,
+    "must": [
+      "security.trust-boundaries",
+      "design.retrieval-and-memory",
+      "design.observability-and-evals",
+      "design.tool-contract"
+    ],
+    "must_not": [
+      "operations.model-migration",
+      "ux.voice",
+      "optional.team-scheduler",
+      "methods.prompt-optimization"
+    ]
+  },
+  {
+    "id": "en-mcp-http-headers-lookup",
+    "query": "Which HTTP headers does MCP 2026-07-28 require for tools/call?",
+    "risks": [],
+    "limit": 3,
+    "must": [
+      "protocols.mcp"
+    ],
+    "must_not": [
+      "design.observability-and-evals",
+      "design.tool-contract",
+      "ux.generative-ui"
+    ],
+    "excerpt_contains": {
+      "protocols.mcp": [
+        "Mcp-Method",
+        "Mcp-Name"
+      ]
+    }
+  },
+  {
+    "id": "en-retrieved-secret-injection",
+    "query": "A prompt injection in a retrieved document may expose credentials.",
+    "risks": [
+      "untrusted_content",
+      "secrets"
+    ],
+    "limit": 6,
+    "must": [
+      "security.trust-boundaries",
+      "design.retrieval-and-memory"
+    ],
+    "must_not": [
+      "security.sandboxing",
+      "security.approvals-and-side-effects",
+      "methods.vertical-slice"
+    ]
+  },
+  {
+    "id": "en-background-customer-email",
+    "query": "Build a multi-tenant background agent that reads customer data and sends emails.",
+    "risks": [
+      "multi_tenant",
+      "external_action"
+    ],
+    "limit": 6,
+    "must": [
+      "security.identity-tenancy-privacy",
+      "security.approvals-and-side-effects",
+      "operations.background-work",
+      "design.tool-contract"
+    ],
+    "must_not": [
+      "methods.vertical-slice",
+      "optional.team-scheduler",
+      "ux.generative-ui"
+    ]
+  }
+]

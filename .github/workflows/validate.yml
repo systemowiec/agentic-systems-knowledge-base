@@ -1,0 +1,19 @@
+name: Validate knowledge base
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  knowledge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check catalog, cards and links
+        run: python3 scripts/kb.py check
+      - name: Evaluate selective retrieval
+        run: python3 scripts/kb.py evaluate

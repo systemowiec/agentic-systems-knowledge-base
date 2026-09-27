@@ -1,0 +1,938 @@
+{
+  "schema_version": 2,
+  "entries": [
+    {
+      "id": "decisions.agent-or-workflow",
+      "path": "decisions/agent-or-workflow.md",
+      "title": "Agent or workflow?",
+      "summary": "Choose code, a code-defined workflow, or an autonomous agent based on task needs.",
+      "use_when": [
+        "choosing between an agent and a workflow",
+        "designing LLM automation",
+        "a FAQ assistant answers questions from documents"
+      ],
+      "do_not_use_when": [
+        "a regular function is sufficient"
+      ],
+      "keywords": [
+        "agent vs workflow",
+        "workflow",
+        "przepływ",
+        "deterministyczny",
+        "klasyfikacja",
+        "ekstrakcja",
+        "autonomia",
+        "single call",
+        "FAQ"
+      ],
+      "risk_tags": [],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "decisions.orchestration",
+      "path": "decisions/orchestration.md",
+      "title": "Choosing an orchestration pattern",
+      "summary": "Response ownership, handoffs, agents as tools, and coordination patterns.",
+      "use_when": [
+        "coordinating several agents",
+        "handing a conversation to a specialist",
+        "delegating a model-driven task"
+      ],
+      "do_not_use_when": [
+        "one function or agent handles the whole task"
+      ],
+      "keywords": [
+        "orchestration",
+        "orkiestracja",
+        "handoff",
+        "agent as tool",
+        "manager",
+        "koordynator",
+        "routing",
+        "delegacja",
+        "właściciel odpowiedzi",
+        "pipeline",
+        "równoległość"
+      ],
+      "risk_tags": [],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "decisions.provider-boundary",
+      "path": "decisions/provider-boundary.md",
+      "title": "Boundary between an application and model providers",
+      "summary": "Provider adapters or a shared gateway without promising full model portability.",
+      "use_when": [
+        "designing a provider adapter",
+        "choosing an LLM gateway",
+        "integrating multiple model providers"
+      ],
+      "do_not_use_when": [
+        "changing only a local prompt"
+      ],
+      "keywords": [
+        "gateway",
+        "adapter",
+        "multi provider",
+        "multi-provider",
+        "provider boundary",
+        "vendor portability",
+        "abstrakcja dostawcy",
+        "API modeli",
+        "OpenAI Anthropic Gemini"
+      ],
+      "risk_tags": [
+        "secrets"
+      ],
+      "status": "recommendation",
+      "version_scope": "OpenAI, Anthropic, and Gemini APIs"
+    },
+    {
+      "id": "decisions.single-or-multi-agent",
+      "path": "decisions/single-or-multi-agent.md",
+      "title": "One agent or several?",
+      "summary": "Split specialists only when the contract changes and the benefit is measurable.",
+      "use_when": [
+        "designing a multi-agent system",
+        "introducing a subagent",
+        "choosing one agent or several specialists"
+      ],
+      "do_not_use_when": [
+        "known steps can be implemented as a workflow"
+      ],
+      "keywords": [
+        "single agent",
+        "multi agent",
+        "multiagent",
+        "wielu agentów",
+        "specjalista",
+        "subagent",
+        "podział agentów",
+        "specialization",
+        "agent team"
+      ],
+      "risk_tags": [],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "design.agent-contract",
+      "path": "design/agent-contract.md",
+      "title": "Agent contract",
+      "summary": "Agent purpose, tools, input, output, limits, and separation of model and runtime context.",
+      "use_when": [
+        "defining an application agent",
+        "specifying agent input and output",
+        "an agent called by another agent",
+        "a specialist takes over a conversation and answers the customer"
+      ],
+      "do_not_use_when": [
+        "implementing a deterministic function without model decisions"
+      ],
+      "keywords": [
+        "agent definition",
+        "kontrakt agenta",
+        "instrukcje agenta",
+        "structured output",
+        "output schema",
+        "guardrails",
+        "runtime context",
+        "limity",
+        "weryfikacja wyniku"
+      ],
+      "risk_tags": [],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "design.context-and-state",
+      "path": "design/context-and-state.md",
+      "title": "Model context, application state, and references",
+      "summary": "Separate model context, execution state, conversation history, and on-demand artifacts.",
+      "use_when": [
+        "a long or multi-turn conversation",
+        "large tool results and artifacts",
+        "resuming model history",
+        "moving conversation history and tool results between provider APIs"
+      ],
+      "do_not_use_when": [
+        "a short stateless call"
+      ],
+      "keywords": [
+        "context engineering",
+        "kontekst",
+        "context window",
+        "historia rozmowy",
+        "migracja historii",
+        "conversation state",
+        "memory",
+        "kompakcja",
+        "previous_response_id",
+        "referencje",
+        "artifact reference",
+        "continuation"
+      ],
+      "risk_tags": [
+        "personal_data",
+        "secrets"
+      ],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "design.events-and-recovery",
+      "path": "design/events-and-recovery.md",
+      "title": "State, events, and recovery",
+      "summary": "Durable tasks, events, retries, and safe recovery after pauses or failures.",
+      "use_when": [
+        "a long-running task",
+        "recovery after a failure",
+        "waiting for approval",
+        "an operation with external side effects"
+      ],
+      "do_not_use_when": [
+        "a short stateless call without side effects"
+      ],
+      "keywords": [
+        "event",
+        "zdarzenia",
+        "event sourcing",
+        "recovery",
+        "resume",
+        "wznowienie",
+        "idempotencja",
+        "retry",
+        "checkpoint",
+        "stan wykonania"
+      ],
+      "risk_tags": [
+        "write",
+        "external_action"
+      ],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "design.observability-and-evals",
+      "path": "design/observability-and-evals.md",
+      "title": "Observability and evaluation",
+      "summary": "Measure task quality, tool use, traces, cost, and regressions in LLM systems.",
+      "use_when": [
+        "evaluating agent behavior",
+        "testing model or prompt changes",
+        "monitoring production behavior",
+        "checking RAG citations and retrieval relevance",
+        "testing conversation routing to a specialist",
+        "measuring voice transcription and interruptions"
+      ],
+      "do_not_use_when": [
+        "static documentation without an executable flow"
+      ],
+      "keywords": [
+        "eval",
+        "evaluation",
+        "ewaluacja",
+        "obserwowalność",
+        "observability",
+        "trace",
+        "tracing",
+        "telemetria",
+        "metryki",
+        "benchmark",
+        "regresja",
+        "testowanie jakości",
+        "RAG",
+        "cytowanie",
+        "specjalista",
+        "transkrypcja",
+        "przerwanie wypowiedzi"
+      ],
+      "risk_tags": [
+        "write",
+        "untrusted_content"
+      ],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "design.retrieval-and-memory",
+      "path": "design/retrieval-and-memory.md",
+      "title": "Retrieval, RAG, and memory",
+      "summary": "On-demand evidence retrieval, citations, RAG evaluation, and controlled persistent memory.",
+      "use_when": [
+        "RAG over documents",
+        "searching private knowledge",
+        "long-term agent memory"
+      ],
+      "do_not_use_when": [
+        "a small stable fact set fits safely in the input"
+      ],
+      "keywords": [
+        "RAG",
+        "retrieval",
+        "wyszukiwanie",
+        "knowledge base",
+        "baza wiedzy",
+        "dokumenty",
+        "embedding",
+        "hybrid search",
+        "search relevance",
+        "cytowania",
+        "pamięć długoterminowa"
+      ],
+      "risk_tags": [
+        "multi_tenant",
+        "personal_data",
+        "untrusted_content"
+      ],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "design.tool-contract",
+      "path": "design/tool-contract.md",
+      "title": "Tool contract for agents",
+      "summary": "Tool input and output schemas, description, authorization, errors, and retry behavior.",
+      "use_when": [
+        "designing a tool for an LLM",
+        "function calling",
+        "a tool used by an agent",
+        "a tool writes a CRM contact",
+        "a tool sends calendar invitations",
+        "document search in an MCP server"
+      ],
+      "do_not_use_when": [
+        "an internal function that the model cannot call"
+      ],
+      "keywords": [
+        "tool design",
+        "tool contract",
+        "narzędzie",
+        "function calling",
+        "inputSchema",
+        "outputSchema",
+        "schemat narzędzia",
+        "JSON schema",
+        "tool error",
+        "idempotencja",
+        "uprawnienia narzędzia",
+        "kontakt",
+        "zaproszenia"
+      ],
+      "risk_tags": [
+        "write",
+        "external_action"
+      ],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "security.approvals-and-side-effects",
+      "path": "security/approvals-and-side-effects.md",
+      "title": "Approvals, side effects, and retries",
+      "summary": "Risk-based approval, authorization tied to a specific action, and idempotent execution.",
+      "use_when": [
+        "sending, publishing, or deleting data",
+        "a payment or resource change by an agent",
+        "approval for an external action"
+      ],
+      "do_not_use_when": [
+        "the agent only drafts content and cannot perform the action"
+      ],
+      "keywords": [
+        "approval",
+        "human in the loop",
+        "HITL",
+        "zatwierdzenie",
+        "zgoda",
+        "skutek uboczny",
+        "write",
+        "delete",
+        "send",
+        "payment",
+        "idempotency",
+        "ponowienie"
+      ],
+      "risk_tags": [
+        "write",
+        "external_action"
+      ],
+      "status": "security principle",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "security.identity-tenancy-privacy",
+      "path": "security/identity-tenancy-privacy.md",
+      "title": "Identity, tenant isolation, and privacy",
+      "summary": "Verified initiator identity, action and resource authorization, tenant isolation, and data privacy.",
+      "use_when": [
+        "a multi-tenant system",
+        "private or personal data",
+        "an agent acts on behalf of a user"
+      ],
+      "do_not_use_when": [
+        "only public data and no protected resources"
+      ],
+      "keywords": [
+        "identity",
+        "auth",
+        "authorization",
+        "RBAC",
+        "tenant",
+        "multi tenant",
+        "multi-tenant",
+        "izolacja klientów",
+        "prywatność",
+        "dane osobowe",
+        "uprawnienia",
+        "workspace"
+      ],
+      "risk_tags": [
+        "multi_tenant",
+        "personal_data",
+        "secrets"
+      ],
+      "status": "security principle",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "security.sandboxing",
+      "path": "security/sandboxing.md",
+      "title": "Isolating agent code and tools",
+      "summary": "Sandbox code, shell, and browser execution; limit secrets, network, and process resources.",
+      "use_when": [
+        "an agent executes code or shell commands",
+        "processing untrusted files",
+        "a browser with access to data"
+      ],
+      "do_not_use_when": [
+        "no execution environment or resource-accessing tools"
+      ],
+      "keywords": [
+        "sandbox",
+        "code execution",
+        "wykonywanie kodu",
+        "shell",
+        "browser",
+        "przeglądarka",
+        "egress",
+        "network isolation",
+        "sekrety",
+        "SSRF",
+        "container"
+      ],
+      "risk_tags": [
+        "code_execution",
+        "secrets",
+        "untrusted_content"
+      ],
+      "status": "security principle",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "security.trust-boundaries",
+      "path": "security/trust-boundaries.md",
+      "title": "Trust boundaries and prompt injection",
+      "summary": "Treat untrusted documents, pages, and tool outputs as data; enforce boundaries outside the prompt.",
+      "use_when": [
+        "a model reads external content",
+        "auditing prompt injection",
+        "RAG or memory from untrusted sources"
+      ],
+      "do_not_use_when": [
+        "a fully deterministic task with no content passed to a model"
+      ],
+      "keywords": [
+        "prompt injection",
+        "iniekcja",
+        "untrusted content",
+        "niezaufana treść",
+        "malicious document",
+        "RAG attack",
+        "poisoned memory",
+        "granica zaufania",
+        "exfiltration"
+      ],
+      "risk_tags": [
+        "untrusted_content",
+        "secrets",
+        "code_execution"
+      ],
+      "status": "security principle",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "operations.background-work",
+      "path": "operations/background-work.md",
+      "title": "Background work, events, and persistent memory",
+      "summary": "Scheduled and webhook triggers, durable state, safe retries, and memory provenance.",
+      "use_when": [
+        "a proactive background agent",
+        "cron or a webhook triggers work",
+        "asynchronous recovery and persistent memory"
+      ],
+      "do_not_use_when": [
+        "a one-off stateless task with no work after the response"
+      ],
+      "keywords": [
+        "background",
+        "praca w tle",
+        "cron",
+        "webhook",
+        "harmonogram",
+        "proactive",
+        "proaktywność",
+        "async",
+        "asynchroniczny",
+        "heartbeat",
+        "pamięć trwała"
+      ],
+      "risk_tags": [
+        "write",
+        "external_action",
+        "untrusted_content"
+      ],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "operations.model-migration",
+      "path": "operations/model-migration.md",
+      "title": "Model migration without breaking the contract",
+      "summary": "Regression tests for history, tools, and reasoning behavior when changing models or APIs.",
+      "use_when": [
+        "replacing a model in a running application",
+        "migrating an API or provider",
+        "upgrading Claude, Gemini, or OpenAI models"
+      ],
+      "do_not_use_when": [
+        "choosing the first model without an existing contract"
+      ],
+      "keywords": [
+        "model migration",
+        "migracja modelu",
+        "zmiana modelu",
+        "upgrade",
+        "regression",
+        "testy regresji",
+        "thinking",
+        "provider switch",
+        "API migration"
+      ],
+      "risk_tags": [
+        "personal_data"
+      ],
+      "status": "recommendation",
+      "version_scope": "OpenAI, Anthropic, and Gemini APIs"
+    },
+    {
+      "id": "operations.production-readiness",
+      "path": "operations/production-readiness.md",
+      "title": "Agent system production readiness",
+      "summary": "Review risk, security, costs, limits, failure handling, and monitoring before launch.",
+      "use_when": [
+        "launching for real users",
+        "a production readiness review",
+        "taking an LLM application live"
+      ],
+      "do_not_use_when": [
+        "an isolated prototype without real data or side effects"
+      ],
+      "keywords": [
+        "production readiness",
+        "produkcja",
+        "deployment",
+        "go live",
+        "limity",
+        "rate limit",
+        "koszty",
+        "monitoring",
+        "retencja",
+        "operacje",
+        "failure"
+      ],
+      "risk_tags": [
+        "write",
+        "multi_tenant",
+        "personal_data"
+      ],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "ux.chat-streaming",
+      "path": "ux/chat-streaming.md",
+      "title": "Chat, streaming, and interaction states",
+      "summary": "Conversation states, streaming, interruptions, and user-visible approval proposals.",
+      "use_when": [
+        "interactive agent chat",
+        "streamed responses",
+        "a UI for action approval"
+      ],
+      "do_not_use_when": [
+        "a batch-only API"
+      ],
+      "keywords": [
+        "chat UI",
+        "czat",
+        "streaming",
+        "stream",
+        "interfejs",
+        "status",
+        "UX",
+        "przerwany stream",
+        "accessibility",
+        "dostępność"
+      ],
+      "risk_tags": [
+        "external_action"
+      ],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "ux.generative-ui",
+      "path": "ux/generative-ui.md",
+      "title": "Generated interfaces and artifacts",
+      "summary": "Choose schema-driven UI or isolated HTML/JS artifacts with authorized actions and accessibility.",
+      "use_when": [
+        "a model generates a view or form",
+        "an interactive HTML artifact",
+        "an MCP Apps UI"
+      ],
+      "do_not_use_when": [
+        "text only or a predefined view"
+      ],
+      "keywords": [
+        "generative UI",
+        "generowane UI",
+        "artifacts",
+        "artefakt",
+        "HTML",
+        "JavaScript",
+        "JSON render",
+        "MCP Apps",
+        "CSP",
+        "formularz",
+        "UI sandbox"
+      ],
+      "risk_tags": [
+        "untrusted_content",
+        "code_execution"
+      ],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "ux.voice",
+      "path": "ux/voice.md",
+      "title": "Voice interface",
+      "summary": "Choose staged speech-to-text and text-to-speech or realtime voice, accounting for latency, interruptions, and audio privacy.",
+      "use_when": [
+        "a voice assistant",
+        "user speech or audio responses",
+        "realtime conversation"
+      ],
+      "do_not_use_when": [
+        "the product has no audio channel"
+      ],
+      "keywords": [
+        "voice",
+        "głos",
+        "audio",
+        "speech",
+        "STT",
+        "TTS",
+        "realtime",
+        "transkrypcja",
+        "barge in",
+        "latency"
+      ],
+      "risk_tags": [
+        "personal_data",
+        "external_action"
+      ],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "protocols.a2a",
+      "path": "protocols/a2a.md",
+      "title": "A2A: communication between independent agents",
+      "summary": "Versioned Agent2Agent protocol for discovering agents, tasks, states, and artifacts across services.",
+      "use_when": [
+        "independent agent systems exchange tasks",
+        "A2A integration across service boundaries"
+      ],
+      "do_not_use_when": [
+        "agents in one runtime can use a local contract"
+      ],
+      "keywords": [
+        "A2A",
+        "Agent2Agent",
+        "AgentCard",
+        "agent card",
+        "inter agent",
+        "cross service",
+        "zadania agentów",
+        "agent discovery",
+        "protocol"
+      ],
+      "risk_tags": [
+        "external_action"
+      ],
+      "status": "versioned reference",
+      "version_scope": "Agent2Agent 1.0.0"
+    },
+    {
+      "id": "protocols.mcp",
+      "path": "protocols/mcp.md",
+      "title": "MCP: tools and context",
+      "summary": "MCP 2026-07-28 tools, resources, prompts, transport, and authorization.",
+      "use_when": [
+        "building an MCP server",
+        "connecting a host to MCP tools",
+        "updating an MCP integration"
+      ],
+      "do_not_use_when": [
+        "a local function does not need interoperability"
+      ],
+      "keywords": [
+        "MCP",
+        "Model Context Protocol",
+        "serwer MCP",
+        "MCP server",
+        "host",
+        "client",
+        "tools/list",
+        "resources",
+        "prompts",
+        "elicitation",
+        "Streamable HTTP",
+        "stdio"
+      ],
+      "risk_tags": [
+        "write",
+        "multi_tenant",
+        "untrusted_content"
+      ],
+      "status": "versioned reference",
+      "version_scope": "MCP 2026-07-28"
+    },
+    {
+      "id": "providers.anthropic",
+      "path": "providers/anthropic.md",
+      "title": "Claude API: messages, tools, and thinking",
+      "summary": "Claude Messages API, tool history, and model-dependent thinking modes.",
+      "use_when": [
+        "integrating the Claude API",
+        "migrating to Anthropic Messages",
+        "Claude thinking and tool history"
+      ],
+      "do_not_use_when": [
+        "the application does not use Anthropic"
+      ],
+      "keywords": [
+        "Anthropic",
+        "Claude",
+        "Messages API",
+        "thinking",
+        "adaptive thinking",
+        "budget_tokens",
+        "signature",
+        "tool use",
+        "assistant prefill"
+      ],
+      "risk_tags": [
+        "personal_data"
+      ],
+      "status": "versioned reference",
+      "version_scope": "Claude Messages API"
+    },
+    {
+      "id": "providers.google",
+      "path": "providers/google.md",
+      "title": "Gemini API: Interactions and tool history",
+      "summary": "Gemini Interactions and GenerateContent APIs, server-side state, thinking, and thought signatures.",
+      "use_when": [
+        "integrating Google Gemini",
+        "migrating GenerateContent to Interactions",
+        "Gemini tool history"
+      ],
+      "do_not_use_when": [
+        "the application does not use Google Gemini"
+      ],
+      "keywords": [
+        "Google",
+        "Gemini",
+        "Interactions API",
+        "GenerateContent",
+        "thinkingLevel",
+        "thinkingBudget",
+        "thoughtSignature",
+        "function calling"
+      ],
+      "risk_tags": [
+        "personal_data"
+      ],
+      "status": "versioned reference",
+      "version_scope": "Gemini Interactions and GenerateContent"
+    },
+    {
+      "id": "providers.openai",
+      "path": "providers/openai.md",
+      "title": "OpenAI API: choosing an API surface and managing state",
+      "summary": "Responses API, Agents SDK, and Agents API: continuation, tool search, and background mode.",
+      "use_when": [
+        "integrating the OpenAI API",
+        "choosing Responses or Agents SDK",
+        "continuing an OpenAI agent run"
+      ],
+      "do_not_use_when": [
+        "only provider-independent guidance is needed"
+      ],
+      "keywords": [
+        "OpenAI",
+        "Responses API",
+        "Agents SDK",
+        "Agents API",
+        "tool_search",
+        "defer_loading",
+        "reasoning.effort",
+        "background mode",
+        "previous_response_id"
+      ],
+      "risk_tags": [
+        "personal_data",
+        "external_action"
+      ],
+      "status": "versioned reference",
+      "version_scope": "OpenAI Responses, Agents SDK, and Agents API"
+    },
+    {
+      "id": "methods.prompt-optimization",
+      "path": "methods/prompt-optimization.md",
+      "title": "Prompt optimization",
+      "summary": "Improve prompts using examples, metrics, and held-out validation results.",
+      "use_when": [
+        "improving model instructions",
+        "optimizing a prompt after failures",
+        "a meta-prompt generates instructions"
+      ],
+      "do_not_use_when": [
+        "no success criterion or test data exists"
+      ],
+      "keywords": [
+        "prompt optimization",
+        "prompt engineering",
+        "meta prompt",
+        "metaprompt",
+        "instrukcje",
+        "prompty",
+        "holdout",
+        "eval",
+        "test danych"
+      ],
+      "risk_tags": [],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "methods.vertical-slice",
+      "path": "methods/vertical-slice.md",
+      "title": "First end-to-end slice",
+      "summary": "Build a narrow working end-to-end path through risky system boundaries before expanding.",
+      "use_when": [
+        "building a new agent system",
+        "testing a risky end-to-end integration",
+        "a first prototype with a model"
+      ],
+      "do_not_use_when": [
+        "a small change already has a fast integration test"
+      ],
+      "keywords": [
+        "vertical slice",
+        "walking skeleton",
+        "end to end",
+        "prototyp",
+        "mock",
+        "proof of concept",
+        "integracja",
+        "cienki przekrój"
+      ],
+      "risk_tags": [],
+      "status": "recommendation",
+      "version_scope": "provider independent"
+    },
+    {
+      "id": "optional.cognitive-agents",
+      "path": "optional/cognitive-agents.md",
+      "title": "Agent with memory and an open-ended decision loop",
+      "summary": "Optional exploratory agent pattern with memory and an open decision loop.",
+      "use_when": [
+        "long-term collaboration with a user",
+        "exploring changing context",
+        "evaluating a cognitive architecture"
+      ],
+      "do_not_use_when": [
+        "known steps and outcomes require predictability"
+      ],
+      "keywords": [
+        "cognitive architecture",
+        "CoALA",
+        "agent kognitywny",
+        "think",
+        "recall",
+        "eksploracja",
+        "autonomia",
+        "modular memory",
+        "Theory of Mind"
+      ],
+      "risk_tags": [
+        "personal_data"
+      ],
+      "status": "optional pattern",
+      "version_scope": "CoALA 2023; design guidance"
+    },
+    {
+      "id": "optional.team-scheduler",
+      "path": "optional/team-scheduler.md",
+      "title": "Durable task scheduler for an agent team",
+      "summary": "Conditional DAG, worker queue, claim/lease, retry, and recovery pattern for agent teams.",
+      "use_when": [
+        "many workers handle dependent tasks",
+        "durable delegation in an agent team",
+        "recovering a task after failure"
+      ],
+      "do_not_use_when": [
+        "a short synchronous delegation fits one call"
+      ],
+      "keywords": [
+        "team scheduler",
+        "scheduler",
+        "DAG",
+        "dependencies",
+        "lease",
+        "claim",
+        "worker",
+        "blackboard",
+        "zespół agentów",
+        "retry",
+        "shared state"
+      ],
+      "risk_tags": [
+        "write",
+        "external_action"
+      ],
+      "status": "optional pattern",
+      "version_scope": "provider independent"
+    }
+  ],
+  "language": "en",
+  "search_languages": [
+    "en",
+    "pl"
+  ]
+}
