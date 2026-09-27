@@ -25,3 +25,5 @@ Do not label every pattern a “best practice.” Distinguish verified requireme
 ## Freshness review
 
 A specification change, API deprecation, or security incident triggers review of affected cards. Check version dependent cards periodically against current primary sources. The claim ledger retains material corrections, and Git retains earlier versions.
+
+Use [MAINTENANCE.md](MAINTENANCE.md) for the monthly scan, quarterly broader review, evidence requirements, and a reusable research prompt.

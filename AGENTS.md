@@ -6,4 +6,4 @@ If you have terminal access and Python 3, you may use the local, read-only `scri
 
 Do not load the local `.private/` directory by default. Its drafts and research notes are unverified inputs, not canonical guidance; consult them only when the user asks for that work.
 
-When changing this repository, follow [CONTRIBUTING.md](CONTRIBUTING.md), provide evidence for changed claims, and run `python3 scripts/kb.py check` and `python3 scripts/kb.py evaluate`. Keep application specific decisions and data in the application repository.
+When changing this repository, follow [CONTRIBUTING.md](CONTRIBUTING.md), provide evidence for changed claims, and run `python3 scripts/kb.py check` and `python3 scripts/kb.py evaluate`. For freshness research, use [MAINTENANCE.md](MAINTENANCE.md). Keep application specific decisions and data in the application repository.

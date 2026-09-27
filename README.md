@@ -44,5 +44,6 @@ You can also ask an agent: “Use this knowledge base. Select only cards relevan
 - Before implementing API or protocol guidance, check the version used by the project and the current primary documentation.
 - Keep application decisions in the application repository and refer to relevant cards by ID. Do not put project specific decisions here.
 - Follow [CONTRIBUTING.md](CONTRIBUTING.md) when changing this knowledge base. Sources and review history are part of the deliverable.
+- Use [MAINTENANCE.md](MAINTENANCE.md) for monthly change scans, quarterly research, and reviews triggered by major releases or incidents.
 
 The selective reading structure is our design, informed by [skill discovery](https://developers.openai.com/api/docs/guides/tools-skills) and [deferred tool loading](https://developers.openai.com/api/docs/guides/tools-tool-search). It does not depend on either API. For human reference, [TERMINOLOGY.md](TERMINOLOGY.md) gives concise Polish equivalents of key English terms; agents do not need to load it by default.
